@@ -1,4 +1,4 @@
 package entité;
 
-public class produit {
+public class Produit {
 }
