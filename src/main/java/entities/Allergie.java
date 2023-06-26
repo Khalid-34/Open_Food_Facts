@@ -2,38 +2,39 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Entité qui correspond à la table categorie
+ * Entité qui correspond à la table Allergie
  * @author  kone mamoudou et khalid
  *
  */
+
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "allergie")
+public class Allergie {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @Column(name = "nom")
     private String nom;
 
-    /**
-     * Une categorie peut avoir plusieurs produits
-     */
-    @OneToMany(mappedBy = "category")
-    private Set<Produit> produits;
+    @ManyToMany
+    @JoinTable(name = "produit_allergie",
+                joinColumns = @JoinColumn(name = "id_allergie",referencedColumnName = "id"),
+                 inverseJoinColumns = @JoinColumn(name = "id_produit",referencedColumnName = "id"))
+    private Set<Produit> produits = new HashSet<Produit>();
 
-    /** Contructeur */
-    public Category() {}
+    /** Constructeur */
+    public Allergie() {}
 
-    public Category(String nom) {
+    public Allergie(String nom) {
         this.nom = nom;
     }
 
-    /** Setters et Getters */
+    /** Getters et Setters */
     public long getId() {
         return id;
     }
