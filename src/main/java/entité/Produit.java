@@ -10,6 +10,7 @@ import java.util.Set;
 public class Produit {
 
     @Id
+    @Column(name="ID")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
@@ -26,8 +27,7 @@ public class Produit {
 
     @Column(name = "nutritionGradeFr")
     private String nutritionGradeFr;
-    @Column(name = "energie100g")
-    private int energie100g;
+
     @Column(name = "energie100g")
     private double graisse100g;
 
@@ -50,11 +50,12 @@ public class Produit {
     @JoinColumn(name ="ID_CAT" )
     private Category category;
 
+    // Jointure de la table produit et ingredient
     @ManyToMany
     @JoinTable(name = "product_ingredient",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    private Set<Ingredient> ingredients ;
+            joinColumns = @JoinColumn(name = "product_id",referencedColumnName= "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id",referencedColumnName= "ID"))
+    private Set<Ingredient> ingredient;
 
 
     public Produit() {
@@ -62,15 +63,13 @@ public class Produit {
 
     public Produit(String nom, String grade, int quantite,
                    String conditionnement, String nutritionGradeFr,
-                   int energie100g, double graisse100g, double sucres100g,
-                   double fibres100g, double proteines100g,
-                   double sel100g) {
+                   double graisse100g, double sucres100g, double fibres100g,
+                   double proteines100g, double sel100g) {
         this.nom = nom;
         this.grade = grade;
         this.quantite = quantite;
         this.conditionnement = conditionnement;
         this.nutritionGradeFr = nutritionGradeFr;
-        this.energie100g = energie100g;
         this.graisse100g = graisse100g;
         this.sucres100g = sucres100g;
         this.fibres100g = fibres100g;
@@ -80,7 +79,7 @@ public class Produit {
 
     public Produit(int id, String nom, String grade, int quantite,
                    String conditionnement, String nutritionGradeFr,
-                   int energie100g, double graisse100g, double sucres100g,
+                   double graisse100g, double sucres100g,
                    double fibres100g, double proteines100g, double sel100g) {
         this.id = id;
         this.nom = nom;
@@ -88,7 +87,6 @@ public class Produit {
         this.quantite = quantite;
         this.conditionnement = conditionnement;
         this.nutritionGradeFr = nutritionGradeFr;
-        this.energie100g = energie100g;
         this.graisse100g = graisse100g;
         this.sucres100g = sucres100g;
         this.fibres100g = fibres100g;
@@ -144,14 +142,6 @@ public class Produit {
         this.nutritionGradeFr = nutritionGradeFr;
     }
 
-    public int getEnergie100g() {
-        return energie100g;
-    }
-
-    public void setEnergie100g(int energie100g) {
-        this.energie100g = energie100g;
-    }
-
     public double getGraisse100g() {
         return graisse100g;
     }
@@ -191,6 +181,4 @@ public class Produit {
     public void setSel100g(double sel100g) {
         this.sel100g = sel100g;
     }
-
-
 }
