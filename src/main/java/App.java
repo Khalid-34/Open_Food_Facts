@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class App {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("monLogger");
+    private static final Logger LOGGER = LoggerFactory.getLogger("org.hibernate.SQL");
     public static void main(String[] args) {
         LOGGER.warn(" Log  _____________________________________________________________________________________________________");
 
@@ -20,24 +20,23 @@ public class App {
                 //  create entity factory
                 EntityManager entityManager = entityManagerFactory.createEntityManager() ) {
 
-            // start transaction
-            entityManager.getTransaction().begin();
+                // start transaction
+                entityManager.getTransaction().begin();
 
-            //create cate
+                //create cat
 
-            Category category = new Category();
-            category.setNom("catenew");
+                Category category = new Category();
+                category.setNom("catenew");
 
-            //
-            Produit produit = new Produit();
-            produit.setNom("maison");
-            produit.setCategory(category);
+                //
+                Produit produit = new Produit();
+                produit.setNom("maison");
+                produit.setCategory(category);
 
-            entityManager.persist(produit);
-            entityManager.persist(category);
+                entityManager.persist(produit);
+                entityManager.persist(category);
 
-
-            entityManager.getTransaction().commit();
+                entityManager.getTransaction().commit();
 
         }
 

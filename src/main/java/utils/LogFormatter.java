@@ -23,8 +23,7 @@ public class LogFormatter extends Formatter
 
     // format is called for every console log message
     @Override
-    public String format(LogRecord record)
-    {
+    public String format(LogRecord record) {
         // This example will print date/time, class, and log level in yellow,
         // followed by the log message and it's parameters in white .
         StringBuilder builder = new StringBuilder();
