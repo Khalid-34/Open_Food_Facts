@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 /**
  * @author kone mamoudou et khalid
+ *classe fille de AbstractDao
  * Class qui implement l'interface CategorieDao
  * Role:
  * gestions des requêtes vers la bdd

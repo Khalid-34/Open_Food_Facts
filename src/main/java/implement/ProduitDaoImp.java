@@ -6,9 +6,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
-
 /**
- *
+ * @author kone mamoudou et khalid
+ * Class fille AsbractDao
+ * Class qui implement l'interface ProduitDao
+ * Role:
+ * gestions des requêtes vers la bdd
  */
 public class ProduitDaoImp extends AbstractDAO implements IProduitDAO {
     //-------------{ ATTRIBUT }----------------//

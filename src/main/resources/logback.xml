@@ -21,6 +21,9 @@
 
     <logger name="org.hibernate.SQL" level="DEBUG" >
     </logger>
+    <logger name="monLog" level="INFO" >
+    </logger>
+
 
     <root level="warn">
         <appender-ref ref="FILE"/>

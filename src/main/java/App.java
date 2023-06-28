@@ -1,44 +1,19 @@
-import entities.Category;
-import entities.Produit;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ConsoleColors;
 
 public class App {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("org.hibernate.SQL");
+    private static final Logger LOGGER = LoggerFactory.getLogger("monLog");
     public static void main(String[] args) {
-        LOGGER.warn(" Log  _____________________________________________________________________________________________________");
+        System.out.println(ConsoleColors.BLUE + "RED COLORED" + " Log  ________________________________________________________");
+        System.out.println("coucou");
+        System.out.println(ConsoleColors.BLUE+"RED COLORED" + " Log  ________________________________________________________");
 
 
-        try(
-                // create entity manager factory
-                EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("banque");
-                //  create entity factory
-                EntityManager entityManager = entityManagerFactory.createEntityManager() ) {
 
-                // start transaction
-                entityManager.getTransaction().begin();
 
-                //create cat
-
-                Category category = new Category();
-                category.setNom("catenew");
-
-                //
-                Produit produit = new Produit();
-                produit.setNom("maison");
-                produit.setCategory(category);
-
-                entityManager.persist(produit);
-                entityManager.persist(category);
-
-                entityManager.getTransaction().commit();
-
-        }
 
     }
 }
