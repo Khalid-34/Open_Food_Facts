@@ -4,6 +4,8 @@ import entities.Ingredient;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ChaineTraitement {
@@ -63,20 +65,40 @@ public class ChaineTraitement {
      * @param str
      * @return
      */
-    public static String removeCarSpe(String str){
-        String cleanStr =  str.replaceAll("[^\\w]\\s", " ")
-                .replaceAll("[\\+\\.\\^,%]", " ")
-                .replaceAll("[\\_\\-]", " ")
-                .replace("fr:", " ")
-                .replace("en:", " ").trim();
+    public static List<String> removeCarSpeListChaine(String str){
+        String cleanStr =  str.replaceAll("[_\\*'/\\?\\+=]*", "")
+                                .replaceAll("\\(.*?\\)", "")
+                                .replaceAll("[\\(\\)\\[\\]]", "")
+                                .replaceAll("[0-9]*\\s*%", "")
+                                .replaceAll("[0-9]*\\.*", "").replace("fr:", " ").replace("en:", " ").trim();
+
         cleanStr = unaccent(cleanStr);
 
 
         if (cleanStr.equals("")) {
             cleanStr = null;
         }
-        return cleanStr;
+        return splitStr(cleanStr);
     }
+
+    private static List<String> splitStr(String str) {
+
+        if (str == null || str.isEmpty()) {
+            return new ArrayList<String>();
+        }
+
+        List<String> liste = new ArrayList<String>();
+        String[] morceaux = str.split("[,;:]");
+        for (String m : morceaux) {
+            String morceauTraite = m.trim();
+            if (!morceauTraite.isEmpty()) {
+
+                liste.add(morceauTraite);
+            }
+        }
+        return liste;
+    }
+
 
 
 

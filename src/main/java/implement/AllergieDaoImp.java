@@ -3,6 +3,7 @@ package implement;
 import dao.IAllergieDAO;
 import entities.Allergie;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 import java.util.List;
 
@@ -28,8 +29,23 @@ public class AllergieDaoImp extends AbstractDAO implements IAllergieDAO {
         return null;
     }
 
+    /**
+     * Insertion bdd et verification du nom avant l'envoi dans la bdd
+     * @param allergie
+     * @throws Exception
+     */
+
     @Override
     public void save(Allergie allergie) throws Exception {
-        em.persist(allergie);
+        Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
+        query.setParameter(1, allergie.getNom());
+        query.setMaxResults(1);
+        List<Allergie> additifDB = query.getResultList();
+        if (additifDB == null || additifDB.isEmpty()) {
+            em.persist(allergie);
+        } else {
+            allergie.setId(additifDB.get(0).getId());
+        }
     }
+
 }

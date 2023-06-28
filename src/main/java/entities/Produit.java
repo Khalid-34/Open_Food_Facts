@@ -392,4 +392,40 @@ public class Produit {
     public void setAllergie(Set<Allergie> allergie) {
         this.allergie = allergie;
     }
+
+    @Override
+    public String toString() {
+        return "Produit{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", grade='" + grade + '\'' +
+                ", energie100g=" + energie100g +
+                ", graisse100g=" + graisse100g +
+                ", sucres100g=" + sucres100g +
+                ", fibres100g=" + fibres100g +
+                ", proteines100g=" + proteines100g +
+                ", sel100g=" + sel100g +
+                ", vitA100g=" + vitA100g +
+                ", vitD100g=" + vitD100g +
+                ", vitE100g=" + vitE100g +
+                ", vitK100g=" + vitK100g +
+                ", vitC100g=" + vitC100g +
+                ", vitB1100g=" + vitB1100g +
+                ", vitB2100g=" + vitB2100g +
+                ", vitPP100g=" + vitPP100g +
+                ", vitB6100g=" + vitB6100g +
+                ", vitB9100g=" + vitB9100g +
+                ", vitB12100g=" + vitB12100g +
+                ", calcium100g=" + calcium100g +
+                ", magnesium100g=" + magnesium100g +
+                ", iron100g=" + iron100g +
+                ", fer100g=" + fer100g +
+                ", betaCarotene100g=" + betaCarotene100g +
+                ", category=" + category +
+                ", marque=" + marque +
+                ", ingredients=" + ingredients +
+                ", additifs=" + additifs +
+                ", allergie=" + allergie +
+                '}';
+    }
 }

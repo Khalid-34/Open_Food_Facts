@@ -3,6 +3,7 @@ package implement;
 import dao.IAdditifDAO;
 import entities.Additif;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 import java.util.List;
 
@@ -31,8 +32,21 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
         return null;
     }
 
+    /**
+     * Insertion bdd et verification du nom avant l'envoi dans la bdd
+     * @param additif
+     * @throws Exception
+     */
     @Override
     public void save(Additif additif) throws Exception {
-        em.persist(additif);
+        Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
+        query.setParameter(1, additif.getNom());
+        query.setMaxResults(0);
+        List<Additif> additifDB = query.getResultList();
+        if (additifDB == null || additifDB.isEmpty()) {
+            em.persist(additif);
+        } else {
+            additif.setId(additifDB.get(0).getId());
+        }
     }
 }

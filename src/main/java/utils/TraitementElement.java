@@ -9,9 +9,16 @@ import java.util.Set;
 
 public class TraitementElement {
 
-/*    private Set<Ingredient> traitementIngredient(String str){
-        List<String> lineOfElement = Collections.singletonList(ChaineTraitement.removeCarSpe(str));
+/*    public static Set<Ingredient> traitementIngredient(String line){
         Set<Ingredient>  listIngredient = new HashSet<Ingredient>();
-    }
-}*/
+        String[] eltIngredient = line.split(",");
+        for( String ingredientNom : eltIngredient){
+            String strCleanIng = ChaineTraitement.removeCarSpe(ingredientNom);
+
+            Ingredient ingredientEnt = new Ingredient(strCleanIng);
+            listIngredient.add(ingredientEnt);
+        }
+
+        return listIngredient;
+    }*/
 }

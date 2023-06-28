@@ -12,6 +12,6 @@ import jakarta.persistence.Persistence;
 public class AbstractDAO {
 
     //-------------{ ATTRIBUT }----------------//
-    public EntityManagerFactory emf = Persistence.createEntityManagerFactory("openfood");;
+    public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("openfood");;
 
 }

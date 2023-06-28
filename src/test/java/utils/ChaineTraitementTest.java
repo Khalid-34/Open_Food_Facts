@@ -41,9 +41,5 @@ public class ChaineTraitementTest {
         assertEquals(expected, ChaineTraitement.unaccent(accents));
         assertEquals(expected2, ChaineTraitement.unaccent(accents2));
     }
-    @Test
-    public void removeCarSpe(){
-        assertEquals(expected3, ChaineTraitement.removeCarSpe(accents3));
 
-    }
 }

@@ -31,6 +31,42 @@ public class Ingredient {
             inverseJoinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "id"))
     private Set<Produit> produits = new HashSet<Produit>();
 
+    public Ingredient() {}
 
+    public Ingredient(String nom) {
+        this.nom = nom;
+    }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Set<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(Set<Produit> produits) {
+        this.produits = produits;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", produits=" + produits +
+                '}';
+    }
 }

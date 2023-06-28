@@ -1,10 +1,7 @@
 package utils;
 
 import dao.ICategoryDAO;
-import entities.Allergie;
-import entities.Category;
-import entities.Marque;
-import entities.Produit;
+import entities.*;
 import implement.CategorieDaoImp;
 
 import java.io.File;
@@ -21,27 +18,37 @@ import java.util.*;
 
 public class ReadCsv {
 
-    public static void main(String[] args) {
+    /**
+     *Role :
+     * Obtenir la liste des produits du csv
+     * @return
+     */
+    public List<Produit> listOfProduit(){
 
+        List<String> lines = new ArrayList<>();
 
+        try {
+            String path = "C:/Users/km84/OneDrive/Bureau/dossierOpenFood/Open_Food_Facts/src/assets/openfood.csv";
+            Path patheFile = Paths.get(path);
+            lines = Files.readAllLines(patheFile);
+        } catch (IOException e) {
 
-            try {
-                String path = "C:/Users/km84/OneDrive/Bureau/dossierOpenFood/Open_Food_Facts/src/assets/openfood.csv";
-                Path patheFile = Paths.get(path);
-                List<String> produitsCsv = Files.readAllLines(patheFile);
-                produitsCsv.remove(0);
+            System.out.println(e.getMessage());
+        }
+        lines.remove(0);
 
-                for (String line: produitsCsv)
-                    linetoProduit(line);
+        System.out.println();
 
-            } catch (IOException e) {
-
-                System.out.println(e.getMessage());
-            }
+        ArrayList<Produit> produits = new ArrayList<Produit>();
+        for (String line: lines){
+            produits.add(linetoProduit(line));
+        }
+        return  produits;
 
     }
 
-    private static Produit linetoProduit(String line){
+
+    private Produit linetoProduit(String line){
         String[] strLine = line.split("\\|", -1);
 
         String category = strLine[0];
@@ -79,28 +86,74 @@ public class ReadCsv {
 
         Category categoryEnt = new Category(category);
         Marque marqueEnt = new Marque(marque);
+
         Produit produitEnt = new Produit(produit);
+        produitEnt.setCategory(categoryEnt);
+        produitEnt.setMarque(marqueEnt);
+
+        produitEnt.setIngredients(cleanIngredient(ingredient));
+        produitEnt.setAllergie(cleanAllergie(allergene));
+        produitEnt.setAdditif(cleanAdditif(additif));
 
 
-        // Extraction des allergenes
-        Set<Allergie> listeAllergenes = new HashSet<Allergie>();
-        List<String> allergenes= Arrays.asList(ChaineTraitement.removeCarSpe(strLine[28]));
-        for (String allergie : allergenes) {
-
-            Allergie allergieEnt = new Allergie(allergie);
-            listeAllergenes.add(allergieEnt);
-            System.out.println(ConsoleColors.BLUE + );
-        }
-
-
-
-
-/*        produitEnt.setGrade(grade);
-        produitEnt.setIngredients();
-        produitEnt.setAdditif(additif);
-        produitEnt.setAllergie();*/
+        produitEnt.setBetaCarotene100g(betaCarotene100g);
+        produitEnt.setCalcium100g(calcium100g);
+        produitEnt.setEnergie100g(energie100g);
+        produitEnt.setFer100g(fer100g);
+        produitEnt.setFibres100g(fibres100g);
+        produitEnt.setGraisse100g(graisse100g);
+        produitEnt.setIron100g(iron100g);
+        produitEnt.setMagnesium100g(magnesium100g);
+        produitEnt.setProteines100g(proteines100g);
+        produitEnt.setSel100g(sel100g);
+        produitEnt.setSucres100g(sucres100g);
+        produitEnt.setVitA100g(vitA100g);
+        produitEnt.setVitB1100g(vitB1100g);
+        produitEnt.setVitB12100g(vitB12100g);
+        produitEnt.setVitB2100g(vitB2100g);
+        produitEnt.setVitB6100g(vitB6100g);
+        produitEnt.setVitB9100g(vitB9100g);
+        produitEnt.setVitC100g(vitC100g);
+        produitEnt.setVitD100g(vitD100g);
+        produitEnt.setVitE100g(vitE100g);
+        produitEnt.setVitK100g(vitK100g);
+        produitEnt.setVitPP100g(vitPP100g);
 
         return produitEnt;
     }
+
+
+    private Set<Ingredient> cleanIngredient(String str){
+
+        List<String> lineStr = ChaineTraitement.removeCarSpeListChaine(str);
+        Set<Ingredient>  listIngredient = new HashSet<Ingredient>();
+        for( String ingredientNom : lineStr){
+
+            listIngredient.add(new Ingredient(ingredientNom));
+        }
+        return listIngredient;
+    }
+    private Set<Additif> cleanAdditif(String str){
+
+        List<String> lineStr = ChaineTraitement.removeCarSpeListChaine(str);
+        Set<Additif>  listAdditif = new HashSet<Additif>();
+        for( String additifNom : lineStr){
+
+            listAdditif.add(new Additif(additifNom));
+        }
+        return listAdditif;
+    }
+
+    private Set<Allergie> cleanAllergie(String str){
+
+        List<String> lineStr = ChaineTraitement.removeCarSpeListChaine(str);
+        Set<Allergie>  listAllergie = new HashSet<Allergie>();
+        for( String additifNom : lineStr){
+
+            listAllergie.add(new Allergie(additifNom));
+        }
+        return listAllergie;
+    }
+
 
 }

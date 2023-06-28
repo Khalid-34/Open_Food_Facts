@@ -3,8 +3,11 @@ package implement;
 import dao.IMarqueDAO;
 import entities.Marque;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 import java.util.List;
+import java.util.Objects;
+
 /**
  * @author kone mamoudou et khalid
  * classe fille de AbstractDao
@@ -28,8 +31,24 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
         return null;
     }
 
+    /**
+     * Insertion bdd et verification avant l'envois dans la bdd
+     * @param marque
+     * @throws Exception
+     */
     @Override
     public void save(Marque marque) throws Exception {
-        em.persist(marque);
+        Query query = em.createQuery("SELECT m FROM Marque m WHERE m.nom = ?1");
+        query.setParameter(1, marque.getNom());
+        query.setMaxResults(1);
+        List<Marque> marqueDB = query.getResultList();
+        if (marqueDB == null || marqueDB.isEmpty()) {
+            em.persist(marque);
+        } else {
+            marque.setId(marqueDB.get(0).getId());
+        }
+
     }
+
+
 }
