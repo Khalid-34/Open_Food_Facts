@@ -28,7 +28,7 @@ public class Produit {
     @Column(name = "nutritionGradeFr")
     private String nutritionGradeFr;
 
-    @Column(name = "energie100g")
+    @Column(name = "graisse100g")
     private double graisse100g;
 
     @Column(name = "sucres100g")
