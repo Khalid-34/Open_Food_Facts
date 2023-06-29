@@ -11,6 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "produit")
+@Cacheable
 public class Produit {
     @Id
     @Column(name = "id")
@@ -80,30 +81,30 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir une categorie
      */
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "id_category")
     private Category category;
 
     /**
      * Plusieurs produits peuvent avoir une marque
      */
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "id_marque")
     private Marque marque;
 
     /**
      * Plusieurs produits peuvent avoir plusieurs ingredients
      */
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "produit_ingredient",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id"))
     private Set<Ingredient> ingredients = new HashSet<Ingredient>();
 
     /**
      * Plusieurs produits peuvent avoir plusieurs additifs
      * */
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "produit_additif",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_additif", referencedColumnName = "id"))
@@ -112,7 +113,7 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir plusieurs allergies
      * */
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "produit_allergie",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_allergie", referencedColumnName = "id"))

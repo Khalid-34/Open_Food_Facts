@@ -2,6 +2,7 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -11,7 +12,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "category")
+@Cacheable
 public class Category {
+    //-------------{ ATTRIBUT }----------------//
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,14 +30,18 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Produit> produits;
 
-    /** Contructeur */
+    //-------------{ CONSTRUCTOR }----------------//
     public Category() {}
 
     public Category(String nom) {
         this.nom = nom;
     }
 
-    /** Setters et Getters */
+
+    //-------------{ METHODS }----------------//
+
+
+    //-------------{ GETTERS ET SETTERS }----------------//
     public long getId() {
         return id;
     }
@@ -56,5 +64,21 @@ public class Category {
 
     public void setProduits(Set<Produit> produits) {
         this.produits = produits;
+    }
+
+    //-------------{ OVERRIDE}----------------//
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(nom, category.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom);
     }
 }

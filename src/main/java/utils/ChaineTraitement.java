@@ -70,7 +70,9 @@ public class ChaineTraitement {
                                 .replaceAll("\\(.*?\\)", "")
                                 .replaceAll("[\\(\\)\\[\\]]", "")
                                 .replaceAll("[0-9]*\\s*%", "")
-                                .replaceAll("[0-9]*\\.*", "").replace("fr:", " ").replace("en:", " ").trim();
+                                .replaceAll("[0-9]*\\.*", "")
+                                .replace("fr:", " ")
+                                .replace("en:", " ").trim();
 
         cleanStr = unaccent(cleanStr);
 

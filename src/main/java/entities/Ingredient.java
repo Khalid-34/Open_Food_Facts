@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ingrdient")
+@Cacheable
 public class Ingredient {
+    //-------------{ ATTRIBUT }----------------//
 
     @Id
     @Column(name = "id")
@@ -25,17 +28,23 @@ public class Ingredient {
     /**
      * Plusieurs ingredients peuvent etre dans plusieurs produits
      */
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "produit_ingredient",
             joinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "id"))
+            inverseJoinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"))
     private Set<Produit> produits = new HashSet<Produit>();
 
+    //-------------{ CONSTRUCTOR }----------------//
     public Ingredient() {}
 
     public Ingredient(String nom) {
         this.nom = nom;
     }
+
+    //-------------{ METHODS }----------------//
+
+
+    //-------------{ GETTERS ET SETTERS }----------------//
 
     public long getId() {
         return id;
@@ -61,12 +70,19 @@ public class Ingredient {
         this.produits = produits;
     }
 
+    //-------------{ OVERRIDE}----------------//
+
+
     @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", produits=" + produits +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Objects.equals(nom, that.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom);
     }
 }

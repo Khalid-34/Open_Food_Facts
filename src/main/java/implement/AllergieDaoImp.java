@@ -37,15 +37,18 @@ public class AllergieDaoImp extends AbstractDAO implements IAllergieDAO {
 
     @Override
     public void save(Allergie allergie) throws Exception {
-        Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
+
+        em.persist(allergie);
+
+/*        Query query = em.createQuery("SELECT a FROM Allergie a WHERE a.nom = ?1");
         query.setParameter(1, allergie.getNom());
         query.setMaxResults(1);
-        List<Allergie> additifDB = query.getResultList();
-        if (additifDB == null || additifDB.isEmpty()) {
+        List<Allergie> allergieDb = query.getResultList();
+        if (allergieDb == null || allergieDb.isEmpty()) {
             em.persist(allergie);
         } else {
-            allergie.setId(additifDB.get(0).getId());
-        }
+            allergie.setId(allergieDb.get(0).getId());
+        }*/
     }
 
 }

@@ -1,9 +1,12 @@
 package implement;
 
 import dao.IMarqueDAO;
+import entities.Additif;
 import entities.Marque;
+import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import utils.ConsoleColors;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +41,15 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
      */
     @Override
     public void save(Marque marque) throws Exception {
-        Query query = em.createQuery("SELECT m FROM Marque m WHERE m.nom = ?1");
+        em.persist(marque);
+
+/*        Cache cache = emf.getCache();
+        if(cache.contains(Marque.class,1L)){
+            System.out.println(ConsoleColors.GREEN_BOLD + "contain" + marque.getNom());
+        }else {
+            em.persist(marque);
+        }*/
+/*        Query query = em.createQuery("SELECT m FROM Marque m WHERE m.nom = ?1");
         query.setParameter(1, marque.getNom());
         query.setMaxResults(1);
         List<Marque> marqueDB = query.getResultList();
@@ -46,9 +57,11 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
             em.persist(marque);
         } else {
             marque.setId(marqueDB.get(0).getId());
-        }
+        }*/
 
     }
+
+
 
 
 }

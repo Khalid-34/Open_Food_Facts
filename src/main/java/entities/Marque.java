@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "marque")
+@Cacheable
 public class Marque {
+    //-------------{ ATTRIBUT }----------------//
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +30,16 @@ public class Marque {
     private Set<Produit> produits = new HashSet<Produit>();
 
 
-    /** constructeur */
+    //-------------{ CONSTRUCTOR }----------------//
     public Marque() {}
 
     public Marque(String nom) {
         this.nom = nom;
     }
 
-    /** Setters et Getters */
+    //-------------{ METHODS }----------------//
 
+    //-------------{ GETTERS ET SETTERS }----------------//
     public long getId() {
         return id;
     }
@@ -50,5 +54,28 @@ public class Marque {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+    //-------------{ OVERRIDE}----------------//
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Marque marque = (Marque) o;
+        return Objects.equals(nom, marque.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom);
+    }
+
+    @Override
+    public String toString() {
+        return "Marque{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", produits=" + produits +
+                '}';
     }
 }

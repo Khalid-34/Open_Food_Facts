@@ -1,9 +1,12 @@
 package implement;
 
 import dao.ICategoryDAO;
+import entities.Additif;
 import entities.Category;
+import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import utils.ConsoleColors;
 
 import java.util.List;
 /**
@@ -37,8 +40,18 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
      */
     @Override
     public void save(Category category) throws Exception {
+        em.persist(category);
 
-        Query query = em.createQuery("SELECT c FROM Category c WHERE c.nom = ?1");
+/*
+        Cache cache = emf.getCache();
+        if(cache.contains(Category.class,1L)){
+            System.out.println(ConsoleColors.GREEN_BOLD + "contain" + category.getNom());
+        }else {
+            em.persist(category);
+        }
+*/
+
+/*        Query query = em.createQuery("SELECT c FROM Category c WHERE c.nom = ?1");
         query.setParameter(1, category.getNom());
         query.setMaxResults(1);
         List<Category> categorieDB = query.getResultList();
@@ -46,7 +59,7 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
             em.persist(category);
         } else {
             category.setId(categorieDB.get(0).getId());
-        }
+        }*/
 
     }
 

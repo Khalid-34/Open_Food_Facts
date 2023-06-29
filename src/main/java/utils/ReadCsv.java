@@ -3,6 +3,7 @@ package utils;
 import dao.ICategoryDAO;
 import entities.*;
 import implement.CategorieDaoImp;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,12 +26,10 @@ public class ReadCsv {
      */
     public List<Produit> listOfProduit(){
 
-        List<String> lines = new ArrayList<>();
+        List<String> lines = null;
 
         try {
-            String path = "C:/Users/km84/OneDrive/Bureau/dossierOpenFood/Open_Food_Facts/src/assets/openfood.csv";
-            Path patheFile = Paths.get(path);
-            lines = Files.readAllLines(patheFile);
+            lines = FileUtils.readLines(new File("C:/Users/km84/OneDrive/Bureau/dossierOpenFood/Open_Food_Facts/src/assets/openfood.csv"),"UTF-8");
         } catch (IOException e) {
 
             System.out.println(e.getMessage());
@@ -88,6 +87,7 @@ public class ReadCsv {
         Marque marqueEnt = new Marque(marque);
 
         Produit produitEnt = new Produit(produit);
+
         produitEnt.setCategory(categoryEnt);
         produitEnt.setMarque(marqueEnt);
 
@@ -129,7 +129,9 @@ public class ReadCsv {
         Set<Ingredient>  listIngredient = new HashSet<Ingredient>();
         for( String ingredientNom : lineStr){
 
-            listIngredient.add(new Ingredient(ingredientNom));
+            if(ingredientNom.length() < 255){
+                listIngredient.add(new Ingredient(ingredientNom));
+            }
         }
         return listIngredient;
     }
