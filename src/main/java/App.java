@@ -1,18 +1,20 @@
 import dao.*;
-import entities.*;
+import entities.Additif;
+import entities.Allergie;
+import entities.Ingredient;
+import entities.Produit;
 import implement.*;
+import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.Int;
 import utils.ConsoleColors;
 import utils.ReadCsv;
 import utils.TimeChrono;
+import utils.TraitementInsert;
 
-import java.time.Duration;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.HashSet;
+import java.util.List;
 
 public class App {
 
@@ -22,6 +24,8 @@ public class App {
 
 
         EntityManager em = AbstractDAO.emf.createEntityManager();
+        Cache cache = AbstractDAO.emf.getCache();
+
         ReadCsv read = new ReadCsv();
         List<Produit> produits = read.listOfProduit();
 
@@ -49,15 +53,15 @@ public class App {
         em.getTransaction().begin();
         long a = System.currentTimeMillis();
 
-
-
         // Insertion dans la base de donnée Category
         for( Produit produit: produits){
-            i++;
+/*            i++;
+
 
             if(mapMarque.size() == 0 ){
 
                 mapMarque.contains(produit.getMarque().getNom());
+
             }
             if(mapMarque.contains(produit.getMarque().getNom()) ){
                 System.out.println(ConsoleColors.BLUE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
@@ -65,9 +69,16 @@ public class App {
             }else {
                 System.out.println(ConsoleColors.CYAN + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
                 mapMarque.add(produit.getMarque().getNom());
-                marqueDAO.save(produit.getMarque());
-            }
+                long id = marqueDAO.save(produit.getMarque());
+                System.out.println(ConsoleColors.GREEN_BOLD + "indentité ==== "+ id) ;
 
+
+            }*/
+            TraitementInsert.verifyBeforeSend(produit.getMarque(),marqueDAO,"getNom",mapMarque);
+
+
+            TraitementInsert.verifyBeforeSend(produit.getCategory(),categoryDAO,"getNom",mapCategory);
+/*
             if(mapCategory.size() == 0 ){
 
                 mapCategory.contains(produit.getCategory().getNom());
@@ -110,17 +121,18 @@ public class App {
 
                     mapAdditif.contains(ad.getNom());
                 }
-                if(mapAdditif.contains(ad.getNom()) ){
-                    System.out.println(ConsoleColors.RED + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+                if(cache.contains(Additif.class,1L)){
+                    System.out.println(ConsoleColors.RED + "il es en cache ___________________________________________________________" + i);
 
                 }else {
+
                     System.out.println(ConsoleColors.RED_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
                     mapAdditif.add(ad.getNom());
                     additifDAO.save(ad);
                 }
 
-            }
-            for (Ingredient ing: produit.getIngredients()){
+            }*/
+/*            for (Ingredient ing: produit.getIngredients()){
                 contIng ++;
 
                 if(mapIngredient.size() == 0 ){
@@ -136,10 +148,10 @@ public class App {
                     ingredientDAO.save(ing);
                 }
 
-            }
+            }*/
 
 
-            categoryDAO.save(produit.getCategory());
+/*            categoryDAO.save(produit.getCategory());
             marqueDAO.save(produit.getMarque());
 
 
@@ -148,12 +160,10 @@ public class App {
             }
             for (Additif ad: produit.getAdditif()){
                 additifDAO.save(ad);
-            }
+            }*/
 
-            produitDAO.save(produit);
-
-        produitDAO.save(produit);
-
+  /*      produitDAO.save(produit);
+*/
         }
         em.getTransaction().commit();
         em.close();
@@ -167,4 +177,6 @@ public class App {
 
 
     }
+
+
 }

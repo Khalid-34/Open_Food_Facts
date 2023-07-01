@@ -7,6 +7,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public class ChaineTraitement {
     //-------------{ ATTRIBUT }----------------//
@@ -53,9 +54,9 @@ public class ChaineTraitement {
      * @return
      */
     public static String unaccent(String str ){
-        return Normalizer
-                .normalize(str, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "");
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("");
     }
 
     /**

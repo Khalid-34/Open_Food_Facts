@@ -11,5 +11,5 @@ import java.util.List;
 public interface IDao <T>{
 
     List<T> getAll() throws Exception;;
-    void save(T t) throws Exception;;
+    long save(T t) throws Exception;;
 }

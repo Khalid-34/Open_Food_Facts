@@ -40,8 +40,9 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
      * @throws Exception
      */
     @Override
-    public void save(Marque marque) throws Exception {
+    public long save(Marque marque) throws Exception {
         em.persist(marque);
+        return  marque.getId();
 
 /*        Cache cache = emf.getCache();
         if(cache.contains(Marque.class,1L)){

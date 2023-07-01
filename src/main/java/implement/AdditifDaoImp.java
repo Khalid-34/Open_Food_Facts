@@ -2,10 +2,7 @@ package implement;
 
 import dao.IAdditifDAO;
 import entities.Additif;
-import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import utils.ConsoleColors;
 
 import java.util.List;
 
@@ -36,16 +33,17 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
 
     /**
      * Insertion bdd et verification du nom avant l'envoi dans la bdd
+     *
      * @param additif
+     * @return
      * @throws Exception
      */
     @Override
-    public void save(Additif additif) throws Exception {
+    public long save(Additif additif) throws Exception {
 
-        Cache cache = emf.getCache();
-        if(cache.contains(Additif.class,1L)){
-            System.out.println(ConsoleColors.GREEN_BOLD + "contain" + additif.getNom());
-        }
+    em.persist(additif);
+
+
 /*
         Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
         query.setParameter(1, additif.getNom());
@@ -56,5 +54,6 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
         } else {
             additif.setId(additifDB.get(0).getId());
         }*/
+        return 0;
     }
 }

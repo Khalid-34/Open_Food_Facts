@@ -3,7 +3,6 @@ package implement;
 import dao.IAllergieDAO;
 import entities.Allergie;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 
 import java.util.List;
 
@@ -31,12 +30,14 @@ public class AllergieDaoImp extends AbstractDAO implements IAllergieDAO {
 
     /**
      * Insertion bdd et verification du nom avant l'envoi dans la bdd
+     *
      * @param allergie
+     * @return
      * @throws Exception
      */
 
     @Override
-    public void save(Allergie allergie) throws Exception {
+    public long save(Allergie allergie) throws Exception {
 
         em.persist(allergie);
 
@@ -49,6 +50,7 @@ public class AllergieDaoImp extends AbstractDAO implements IAllergieDAO {
         } else {
             allergie.setId(allergieDb.get(0).getId());
         }*/
+        return allergie.getId();
     }
 
 }

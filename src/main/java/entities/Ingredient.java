@@ -18,7 +18,7 @@ public class Ingredient {
     //-------------{ ATTRIBUT }----------------//
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id",unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

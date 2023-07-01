@@ -1,12 +1,8 @@
 package implement;
 
 import dao.ICategoryDAO;
-import entities.Additif;
 import entities.Category;
-import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
-import utils.ConsoleColors;
 
 import java.util.List;
 /**
@@ -35,11 +31,13 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
 
     /**
      * Insertion bdd et verification du nom avant l'envoi dans la bdd
+     *
      * @param category
+     * @return
      * @throws Exception
      */
     @Override
-    public void save(Category category) throws Exception {
+    public long save(Category category) throws Exception {
         em.persist(category);
 
 /*
@@ -61,6 +59,7 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
             category.setId(categorieDB.get(0).getId());
         }*/
 
+        return 0;
     }
 
 
