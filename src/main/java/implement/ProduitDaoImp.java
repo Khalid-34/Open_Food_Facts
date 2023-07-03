@@ -39,7 +39,6 @@ public class ProduitDaoImp extends AbstractDAO implements IProduitDAO {
         List<Produit> produitDb = query.getResultList();
         if (produitDb == null || produitDb.isEmpty()) {
             System.out.println(ConsoleColors.YELLOW + "ELESE");
-
             em.persist(produit);
 
         } else {

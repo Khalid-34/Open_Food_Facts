@@ -73,12 +73,11 @@ public class App {
             }
             if(mapMarque.contains(marqueObj) ){
 
-                System.out.println(ConsoleColors.BLUE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-
             }else {
                 System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
                 mapMarque.add(marqueObj);
                 marqueDAO.save(produit.getMarque());
+
             }
 
             if(mapCategory.size() == 0 ){
@@ -93,6 +92,7 @@ public class App {
                 mapCategory.add(categoryObj);
                 categoryDAO.save(produit.getCategory());
                 produitDAO.save(produit);
+
             }
 
 
@@ -152,7 +152,6 @@ public class App {
                 }
 
             }
-
             em.getTransaction().commit();
         }
         em.close();

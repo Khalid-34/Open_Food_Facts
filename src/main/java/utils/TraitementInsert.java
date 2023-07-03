@@ -21,8 +21,8 @@ public class TraitementInsert {
 
         }else {
             System.out.println(ConsoleColors.CYAN + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            long id = entyDao.save(entite);
-            System.out.println(ConsoleColors.GREEN_BOLD + "indentité ==== "+ id) ;
+            entyDao.save(entite);
+            System.out.println(ConsoleColors.GREEN_BOLD + "indentité ==== ") ;
             entyMap.add(getNom);
 
 
