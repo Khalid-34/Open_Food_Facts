@@ -50,10 +50,9 @@ public class App {
 
 
 
-
-        // Insertion dans la base de donnée Category
         for( Produit produit: produits){
             em.getTransaction().begin();
+
 
 
             Marque marqueObj = produit.getMarque();
@@ -73,10 +72,18 @@ public class App {
             }
             if(mapMarque.contains(marqueObj) ){
 
+                Iterator<Marque> marqueIterator = mapMarque.iterator();
+                while (marqueIterator.hasNext()){
+                    Marque marqueNext = marqueIterator.next();
+                    if(marqueNext.getId() == marqueObj.getId()){
+                        marqueObj.setId(marqueNext.getId());
+                    }
+                }
+
             }else {
                 System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
                 mapMarque.add(marqueObj);
-                marqueDAO.save(produit.getMarque());
+                marqueDAO.save(marqueObj);
 
             }
 
@@ -85,6 +92,15 @@ public class App {
                 mapCategory.contains(categoryObj);
             }
             if(mapCategory.contains(categoryObj) ){
+
+                Iterator<Category> categorieIterator = mapCategory.iterator();
+                while (categorieIterator.hasNext()){
+                    Category categoryNext = categorieIterator.next();
+                    if(categoryNext.getId() == marqueObj.getId()){
+                        marqueObj.setId(categoryNext.getId());
+                    }
+                }
+
                 System.out.println(ConsoleColors.GREEN_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
             }else {
@@ -153,6 +169,7 @@ public class App {
 
             }
             em.getTransaction().commit();
+
         }
         em.close();
 
