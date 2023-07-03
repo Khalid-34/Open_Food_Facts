@@ -57,17 +57,18 @@ public class Marque {
     }
     //-------------{ OVERRIDE}----------------//
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Marque marque = (Marque) o;
-        return Objects.equals(nom, marque.nom);
+        return id == marque.id && Objects.equals(nom, marque.nom) && Objects.equals(produits, marque.produits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.hash(id, nom, produits);
     }
 
     @Override

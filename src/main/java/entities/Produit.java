@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ public class Produit {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
-    @Column(name = "nom",unique = true)
+    @Column(name = "nom")
     private String nom;
     @Column(name = "grade")
     private String grade;
@@ -104,7 +105,7 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir plusieurs additifs
      * */
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "produit_additif",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_additif", referencedColumnName = "id"))
@@ -126,7 +127,7 @@ public class Produit {
         this.nom = nom;
     }
 
-    public Produit(String nom, String grade, Double energie100g, Double graisse100g, Double sucres100g, Double fibres100g, Double proteines100g, Double sel100g, Double vitA100g, Double vitD100g, Double vitE100g, Double vitK100g, Double vitC100g, Double vitB1100g, Double vitB2100g, Double vitPP100g, Double vitB6100g, Double vitB9100g, Double vitB12100g, Double calcium100g, Double magnesium100g, Double iron100g, Double fer100g, Double betaCarotene100g) {
+    public Produit(String nom, String grade, Double energie100g, Double graisse100g, Double sucres100g, Double fibres100g, Double proteines100g, Double sel100g, Double vitA100g, Double vitD100g, Double vitE100g, Double vitK100g, Double vitC100g, Double vitB1100g, Double vitB2100g, Double vitPP100g, Double vitB6100g, Double vitB9100g, Double vitB12100g, Double calcium100g, Double magnesium100g, Double iron100g, Double fer100g, Double betaCarotene100g, Category category, Marque marque, Set<Ingredient> ingredients, Set<Additif> additifs, Set<Allergie> allergie) {
         this.nom = nom;
         this.grade = grade;
         this.energie100g = energie100g;
@@ -151,6 +152,11 @@ public class Produit {
         this.iron100g = iron100g;
         this.fer100g = fer100g;
         this.betaCarotene100g = betaCarotene100g;
+        this.category = category;
+        this.marque = marque;
+        this.ingredients = ingredients;
+        this.additifs = additifs;
+        this.allergie = allergie;
     }
 
     /** Getters et Setters **/
@@ -429,4 +435,6 @@ public class Produit {
                 ", allergie=" + allergie +
                 '}';
     }
+
+
 }

@@ -67,16 +67,18 @@ public class Additif {
     }
 
     //-------------{ OVERRIDE}----------------//
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Additif additif = (Additif) o;
-        return Objects.equals(nom, additif.nom);
+        return id == additif.id && Objects.equals(nom, additif.nom) && Objects.equals(produits, additif.produits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.hash(id, nom, produits);
     }
 }

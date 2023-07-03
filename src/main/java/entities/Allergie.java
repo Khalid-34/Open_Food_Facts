@@ -68,16 +68,17 @@ public class Allergie {
 
     //-------------{ OVERRIDE}----------------//
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Allergie allergie = (Allergie) o;
-        return Objects.equals(nom, allergie.nom);
+        return id == allergie.id && Objects.equals(nom, allergie.nom) && Objects.equals(produits, allergie.produits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.hash(id, nom, produits);
     }
 }

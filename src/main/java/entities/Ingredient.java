@@ -78,11 +78,11 @@ public class Ingredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(nom, that.nom);
+        return id == that.id && Objects.equals(nom, that.nom) && Objects.equals(produits, that.produits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.hash(id, nom, produits);
     }
 }

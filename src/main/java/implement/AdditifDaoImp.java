@@ -44,6 +44,7 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
     em.persist(additif);
 
 
+    return additif.getId();
 /*
         Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
         query.setParameter(1, additif.getNom());
@@ -54,6 +55,5 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
         } else {
             additif.setId(additifDB.get(0).getId());
         }*/
-        return 0;
     }
 }

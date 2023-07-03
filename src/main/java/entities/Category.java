@@ -74,11 +74,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(nom, category.nom);
+        return id == category.id && Objects.equals(nom, category.nom) && Objects.equals(produits, category.produits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nom);
+        return Objects.hash(id, nom, produits);
     }
 }
