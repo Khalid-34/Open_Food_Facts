@@ -84,11 +84,11 @@
             <artifactId>slf4s-api_2.11</artifactId>
             <version>1.7.25</version>
         </dependency>
-
-
-
-
-
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.2.5.Final</version>
+        </dependency>
 
 
     </dependencies>

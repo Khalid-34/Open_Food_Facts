@@ -1,6 +1,7 @@
 package dao;
 
 import entities.Additif;
+import jakarta.persistence.QueryHint;
 
 import java.util.List;
 

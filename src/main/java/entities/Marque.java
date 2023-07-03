@@ -17,7 +17,7 @@ import java.util.Set;
 public class Marque {
     //-------------{ ATTRIBUT }----------------//
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "nom")
