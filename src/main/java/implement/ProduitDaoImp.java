@@ -34,21 +34,6 @@ public class ProduitDaoImp extends AbstractDAO implements IProduitDAO {
     public void save(Produit produit) {
 
         em.persist(produit);
-/*        Query query = em.createQuery("SELECT p FROM Produit p WHERE p.nom = ?1");
-
-        query.setParameter(1, produit.getNom());
-        query.setMaxResults(1);
-        List<Produit> produitDb = query.getResultList();
-        if (produitDb == null || produitDb.isEmpty()) {
-            System.out.println(ConsoleColors.YELLOW + "ELESE");
-            em.persist(produit);
-
-        } else {
-            System.out.println(ConsoleColors.PURPLE + "ELESE");
-            produit.setId(produitDb.get(0).getId());
-        }*/
     }
 
-/*
-    }*/
 }
