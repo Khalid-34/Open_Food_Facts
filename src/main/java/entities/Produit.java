@@ -85,21 +85,21 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir une categorie
      */
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "id_category")
     private Category category;
 
     /**
      * Plusieurs produits peuvent avoir une marque
      */
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "id_marque")
     private Marque marque;
 
     /**
      * Plusieurs produits peuvent avoir plusieurs ingredients
      */
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "produit_ingredient",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id"))
@@ -108,7 +108,7 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir plusieurs additifs
      * */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {  CascadeType.MERGE})
     @JoinTable(name = "produit_additif",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_additif", referencedColumnName = "id"))
@@ -117,7 +117,7 @@ public class Produit {
     /**
      * Plusieurs produits peuvent avoir plusieurs allergies
      * */
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "produit_allergie",
             joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_allergie", referencedColumnName = "id"))

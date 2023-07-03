@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class App {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("monLog");
+
     public static void main(String[] args) throws Exception {
 
 
@@ -27,190 +28,147 @@ public class App {
         IProduitDAO produitDAO = new ProduitDaoImp(em);
         ICategoryDAO categoryDAO = new CategorieDaoImp(em);
         IIngredientDAO ingredientDAO = new IngredientDaoImp(em);
-        IAllergieDAO  allergieDAO = new AllergieDaoImp(em);
+        IAllergieDAO allergieDAO = new AllergieDaoImp(em);
         IMarqueDAO marqueDAO = new MarqueDaoImp(em);
         IAdditifDAO additifDAO = new AdditifDaoImp(em);
 
 
-        HashSet<Marque> mapMarque = new HashSet<>();
-        HashSet<Category> mapCategory = new HashSet<>();
-        HashSet<Ingredient> mapIngredient = new HashSet<>();
-        HashSet<Allergie> mapAllergie = new HashSet<>();
-        HashSet<Additif> mapAdditif = new HashSet<>();
+        HashMap<String, Marque> mapMarque = new HashMap<>();
+        HashMap<String, Category> mapCategory = new HashMap<>();
+        HashMap<String, Ingredient> mapIngredient = new HashMap<>();
+        HashMap<String, Allergie> mapAllergie = new HashMap<>();
+        HashMap<String, Additif> mapAdditif = new HashMap<>();
+        HashMap<String, Produit> mapProduit = new HashMap<>();
 
 
-
-        int i =0;
+        int i = 0;
         int contIng = 0;
         int contAl = 0;
         int contAd = 0;
 
         long a = System.currentTimeMillis();
-
-
-        for( Produit produit: produits){
-
-            em.getTransaction().begin();
+        em.getTransaction().begin();
+        for (Produit produit : produits) {
 
 
             Marque marqueObj = produit.getMarque();
             Category categoryObj = produit.getCategory();
-            Set<Additif> additifList =  produit.getAdditif();
+            Set<Additif> additifList = produit.getAdditif();
             Set<Allergie> allergieList = produit.getAllergie();
             Set<Ingredient> ingredientList = produit.getIngredients();
-
 
             i++;
 
 
-            if(mapMarque.contains(marqueObj) ){
+            /** MARQUES
+             */
 
-                Iterator<Marque> marqueIterator = mapMarque.iterator();
-                while (marqueIterator.hasNext()){
-                    Marque marqueNext = marqueIterator.next();
-                    if(marqueNext.getId() == marqueObj.getId()){
-                        marqueObj.setId(marqueNext.getId());
-                    }
+            if (mapMarque.containsKey(marqueObj.getNom())) {
+                Marque entMarque = mapMarque.get(marqueObj.getNom());
+                marqueObj.setId(entMarque.getId());
+                System.out.println(ConsoleColors.RED + "insertion ************* " + marqueObj.getNom());
+
+            } else {
+                    System.out.println(ConsoleColors.CYAN + "insertion ************* " + marqueObj.getNom());
+                    mapMarque.put(marqueObj.getNom(), marqueObj);
+                    marqueDAO.save(marqueObj);
                 }
 
-            }else {
-                System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
-                mapMarque.add(marqueObj);
-                marqueDAO.save(marqueObj);
+            /**
+             * Category
+             */
 
-            }
+            if (mapCategory.containsKey(categoryObj.getNom())) {
+                Category entCat = mapCategory.get(categoryObj.getNom());
+                categoryObj.setId(entCat.getId());
+                System.out.println(ConsoleColors.GREEN_BOLD + " SETTTTTERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + categoryObj.getNom());
 
-            // Category
-
-
-            if(mapCategory.contains(categoryObj) ){
-
-                Iterator<Category> categorieIterator = mapCategory.iterator();
-                while (categorieIterator.hasNext()){
-                    Category categoryNext = categorieIterator.next();
-                    if(categoryNext.getId() == categoryObj.getId()){
-                        categoryObj.setId(categoryNext.getId());
-                    }
-                }
-
-                System.out.println(ConsoleColors.GREEN_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-
-            }else {
-                System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                mapCategory.add(categoryObj);
+            } else {
+                System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + " INSERTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + categoryObj.getNom());
+                mapCategory.put(categoryObj.getNom(), categoryObj);
                 categoryDAO.save(produit.getCategory());
 
             }
 
-/*
-            produitDAO.save(produit);
-*/
-
-
-            // allergie
-
-            for (Allergie al: allergieList){
-                contAl ++;
-
-                if(mapAllergie.contains(al) ){
-
-                    Iterator<Allergie> allergieIterator = mapAllergie.iterator();
-                    while (allergieIterator.hasNext()){
-                        Allergie allergieNext = allergieIterator.next();
-                        if(allergieNext.getId() == al.getId()){
-                            al.setId(allergieNext.getId());
-                        }
-                    }
-                    System.out.println(ConsoleColors.PURPLE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-                }else {
-                    System.out.println(ConsoleColors.PURPLE_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    mapAllergie.add(al);
-                    allergieDAO.save(al);
-                }
-
-            }
-
-            for (Additif ad: additifList){
-                contAd ++;
-
-
-                if(mapAdditif.contains(ad) ){
-
-                    Iterator<Additif> additifIterator = mapAdditif.iterator();
-                    while (additifIterator.hasNext()){
-                        Additif adNext = additifIterator.next();
-                        if(adNext.getId() == ad.getId()){
-                            ad.setId(adNext.getId());
-                        }
-                    }
-                    System.out.println(ConsoleColors.RED + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-
-                }else {
-                    System.out.println(ConsoleColors.RED_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    mapAdditif.add(ad);
-                    additifDAO.save(ad);
-                }
-
-            }
-
-
-            for (Ingredient ing: ingredientList){
-                contIng ++;
-
-                if(mapIngredient.contains(ing) ){
-                    Iterator<Ingredient> ingIterator = mapIngredient.iterator();
-                    while (ingIterator.hasNext()){
-                        Ingredient ingNext = ingIterator.next();
-                        if(ingNext.getId() == ing.getId()){
-                            ing.setId(ingNext.getId());
-                        }
-                    }
-
-                    System.out.println(ConsoleColors.YELLOW + "INGREDIENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-                }else {
-                    System.out.println(ConsoleColors.YELLOW_BOLD + " INGREDIENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    mapIngredient.add(ing);
-                    ingredientDAO.save(ing);
-                }
-
-            }
-
-
-/*            if(mapProduit.size() == 0 ){
-
-                mapProduit.add(produit);
-            }
-            if(mapProduit.contains(produit) ){
-
-                Iterator<Produit> prodIterator = mapProduit.iterator();
-                while (prodIterator.hasNext()){
-                    Produit produitNext = prodIterator.next();
-                    if(produitNext.getId() == produit.getId()){
-                        produit.setId(produitNext.getId());
-                    }
-                }
+            /**
+             * PRODUITS
+             */
+            if (mapProduit.containsKey(produit.getNom())){
+                Produit entPro = mapProduit.get(produit.getNom());
+                produit.setId(entPro.getId());
+                System.out.println(ConsoleColors.GREEN_BOLD + " SETTTTTERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + produit.getNom());
 
             }else {
-                System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
-                mapProduit.add(produit);
+                System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + " INSERTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + categoryObj.getNom());
+                mapProduit.put(produit.getNom(), produit);
                 produitDAO.save(produit);
-            }*/
-            em.getTransaction().commit();
+            }
+
+            /**
+             * ADDITIF
+             */
+
+            for (Additif additifObj: additifList){
+
+                if (mapAdditif.containsKey(additifObj.getNom())){
+                    Additif entAdditif = mapAdditif.get(additifObj.getNom());
+                    additifObj.setId(entAdditif.getId());
+                    System.out.println(ConsoleColors.GREEN_BOLD + " SETTTTTERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + additifObj.getNom());
+                }else {
+                    mapAdditif.put(additifObj.getNom(),additifObj);
+                    additifDAO.save(additifObj);
+                    System.out.println(ConsoleColors.BLUE_BOLD + " INSERTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + additifObj.getNom());
+
+                }
+            }
+            /**
+             * ALLERGIE
+             */
+            for (Allergie allergieObj: allergieList){
+
+                if (mapAdditif.containsKey(allergieObj.getNom())){
+                    Additif entAdditif = mapAdditif.get(allergieObj.getNom());
+                    allergieObj.setId(entAdditif.getId());
+                    System.out.println(ConsoleColors.GREEN_BOLD + " SETTTTTERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + allergieObj.getNom());
+                }else {
+                    mapAllergie.put(allergieObj.getNom(),allergieObj);
+                    allergieDAO.save(allergieObj);
+                    System.out.println(ConsoleColors.YELLOW + " INSERTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + allergieObj.getNom());
+
+                }
+            }
+
+            /**
+             * INGREDIENTS
+             */
+
+            for (Ingredient ingredientObj: ingredientList){
+                if(mapIngredient.containsKey(ingredientObj.getNom())){
+                    Ingredient ingredientEnt = mapIngredient.get(ingredientObj.getNom());
+                    ingredientObj.setId(ingredientEnt.getId());
+                }else {
+                    mapIngredient.put(ingredientObj.getNom(),ingredientObj);
+                    ingredientDAO.save(ingredientObj);
+                    System.out.println(ConsoleColors.BLUE_BOLD + " INSERTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + ingredientObj.getNom());
+
+                }
+
+            }
 
         }
-        em.close();
 
 
+            em.getTransaction().commit();
 
-        long b = System.currentTimeMillis();
-        long r = (a - b ) /1000;
+            em.close();
 
-        System.out.println("temps " + r);
-        System.out.println(contIng + " cont ingredient \n " + "allergie =" + ConsoleColors.RED_BOLD + contAl +"\n"+ ConsoleColors.YELLOW_BOLD_BRIGHT + contAd);
-        System.out.println(ConsoleColors.GREEN_BOLD + "nb produit = " + produits.size() + "temps de traitement = " + TimeChrono.millisecondsToTime(r));
 
+            long b = System.currentTimeMillis();
+            long r = (a - b) / 1000;
+
+            System.out.println("temps " + r);
+            System.out.println(contIng + " cont ingredient \n " + "allergie =" + ConsoleColors.RED_BOLD + contAl + "\n" + ConsoleColors.YELLOW_BOLD_BRIGHT + contAd);
+            System.out.println(ConsoleColors.GREEN_BOLD + "nb produit = " + produits.size() + "temps de traitement = " + TimeChrono.millisecondsToTime(r));
 
     }
 }

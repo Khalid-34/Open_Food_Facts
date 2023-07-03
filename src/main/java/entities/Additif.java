@@ -25,10 +25,7 @@ public class Additif {
     @Column(name = "nom")
     private String nom;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "produit_additif",
-            joinColumns = @JoinColumn(name = "id_additif",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_produit",referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "additifs",cascade = {CascadeType.MERGE})
     private Set<Produit> produits = new HashSet<Produit>();
 
     //-------------{ CONSTRUCTOR }----------------//

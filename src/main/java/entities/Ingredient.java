@@ -28,10 +28,7 @@ public class Ingredient {
     /**
      * Plusieurs ingredients peuvent etre dans plusieurs produits
      */
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "produit_ingredient",
-            joinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "ingredients",cascade = { CascadeType.MERGE})
     private Set<Produit> produits = new HashSet<Produit>();
 
     //-------------{ CONSTRUCTOR }----------------//
