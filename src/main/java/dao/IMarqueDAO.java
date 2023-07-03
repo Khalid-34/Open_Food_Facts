@@ -17,4 +17,7 @@ public interface IMarqueDAO extends IDao<Marque>{
 
     @Override
     void save(Marque marque) throws Exception;
+
+    @Override
+    Marque findByNom(Marque marque, String nom) throws Exception;
 }

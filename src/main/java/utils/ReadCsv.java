@@ -1,16 +1,14 @@
 package utils;
 
-import dao.ICategoryDAO;
 import entities.*;
-import implement.CategorieDaoImp;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Lecture du fichier csv
@@ -53,12 +51,10 @@ public class ReadCsv {
         String category = strLine[0];
         String marque = strLine[1];
         String produit = strLine[2];
-        String grade = strLine[3];
         String ingredient = strLine[4];
-
         String allergene = strLine[28];
         String additif = strLine[29];
-
+        String grade = strLine[3];
 
         Double energie100g = ChaineTraitement.convertToDouble(strLine[5]);
         Double graisse100g = ChaineTraitement.convertToDouble(strLine[6]);
@@ -83,19 +79,20 @@ public class ReadCsv {
         Double fer100g = ChaineTraitement.convertToDouble(strLine[25]);
         Double betaCarotene100g = ChaineTraitement.convertToDouble(strLine[26]);
 
+        Produit produitEnt = new Produit(produit);
         Category categoryEnt = new Category(category);
         Marque marqueEnt = new Marque(marque);
 
-        Produit produitEnt = new Produit(produit);
+
 
         produitEnt.setCategory(categoryEnt);
         produitEnt.setMarque(marqueEnt);
-
         produitEnt.setIngredients(cleanIngredient(ingredient));
         produitEnt.setAllergie(cleanAllergie(allergene));
         produitEnt.setAdditif(cleanAdditif(additif));
 
 
+        produitEnt.setGrade(grade);
         produitEnt.setBetaCarotene100g(betaCarotene100g);
         produitEnt.setCalcium100g(calcium100g);
         produitEnt.setEnergie100g(energie100g);

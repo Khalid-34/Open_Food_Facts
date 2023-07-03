@@ -6,6 +6,7 @@ import entities.Marque;
 import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import utils.ConsoleColors;
 
 import java.util.List;
@@ -45,6 +46,17 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
     }
 
 
+    @Override
+    public Marque findByNom(Marque marque, String nom) throws Exception {
+        TypedQuery<Marque> query = em.createQuery("FROM Produit WHERE nom=:nom AND marque=:marque", Marque.class);
+        query.setParameter("nom",nom);
+        query.setParameter("marque",marque);
+
+        List<Marque> results = query.getResultList();
+        if(results != null) return results.get(0);
+        return null;
+
+    }
 
 
 }

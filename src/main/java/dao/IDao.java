@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface IDao <T>{
 
-    List<T> getAll() throws Exception;;
-    void save(T t) throws Exception;;
+    List<T> getAll() throws Exception;
+    void save(T t) throws Exception;
+
+    T findByNom(T t,String n) throws Exception;
 }
