@@ -29,18 +29,8 @@ public class IngredientDaoImp extends AbstractDAO implements IIngredientDAO {
      * @throws Exception
      */
     @Override
-    public long save(Ingredient ingredient) throws Exception {
+    public void save(Ingredient ingredient) throws Exception {
         em.persist(ingredient);
-        return 0;
     }
-/*        Query query = em.createQuery("SELECT i FROM Ingredient i WHERE i.nom = ?1");
-        query.setParameter(1, ingredient.getNom());
-        query.setMaxResults(1);
-        List<Ingredient> ingredientDB = query.getResultList();
-        if (ingredientDB == null || ingredientDB.isEmpty()) {
-            em.persist(ingredient);
-        } else {
-            ingredient.setId(ingredientDB.get(0).getId());
-        }
-    }*/
+
 }

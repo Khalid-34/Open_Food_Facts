@@ -39,21 +39,9 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
      * @throws Exception
      */
     @Override
-    public long save(Additif additif) throws Exception {
+    public void save(Additif additif) throws Exception {
 
     em.persist(additif);
 
-
-    return additif.getId();
-/*
-        Query query = em.createQuery("SELECT a FROM Additif a WHERE a.nom = ?1");
-        query.setParameter(1, additif.getNom());
-        query.setMaxResults(0);
-        List<Additif> additifDB = query.getResultList();
-        if (additifDB == null || additifDB.isEmpty()) {
-            em.persist(additif);
-        } else {
-            additif.setId(additifDB.get(0).getId());
-        }*/
     }
 }

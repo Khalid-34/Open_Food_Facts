@@ -15,5 +15,5 @@ public interface IProduitDAO extends IDao<Produit>{
     List<Produit> getAll();
 
     @Override
-    long save(Produit produit);
+    void save(Produit produit);
 }

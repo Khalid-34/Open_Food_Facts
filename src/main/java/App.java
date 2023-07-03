@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 public class App {
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger("monLog");
     public static void main(String[] args) throws Exception {
 
@@ -33,11 +32,12 @@ public class App {
         IAdditifDAO additifDAO = new AdditifDaoImp(em);
 
 
-        HashSet<String> mapMarque = new HashSet<>();
-        HashSet<String> mapCategory = new HashSet<>();
-        HashSet<String> mapIngredient = new HashSet<>();
-        HashSet<String> mapAllergie = new HashSet<>();
-        HashSet<String> mapAdditif = new HashSet<>();
+        HashSet<Marque> mapMarque = new HashSet<>();
+        HashSet<Category> mapCategory = new HashSet<>();
+        HashSet<Ingredient> mapIngredient = new HashSet<>();
+        HashSet<Allergie> mapAllergie = new HashSet<>();
+        HashSet<Additif> mapAdditif = new HashSet<>();
+        HashSet<Produit> mapProduit = new HashSet<>();
 
 
 
@@ -46,105 +46,118 @@ public class App {
         int contAl = 0;
         int contAd = 0;
 
-        em.getTransaction().begin();
         long a = System.currentTimeMillis();
+
 
 
 
         // Insertion dans la base de donnée Category
         for( Produit produit: produits){
+            em.getTransaction().begin();
+
+
+            Marque marqueObj = produit.getMarque();
+            Category categoryObj = produit.getCategory();
+            Set<Additif> additifList =  produit.getAdditif();
+            Set<Allergie> allergieList = produit.getAllergie();
+            Set<Ingredient> ingredientList = produit.getIngredients();
+
+
+
+
             i++;
 
             if(mapMarque.size() == 0 ){
 
-                mapMarque.contains(produit.getMarque().getNom());
+                mapMarque.add(marqueObj);
             }
-            if(mapMarque.contains(produit.getMarque().getNom()) ){
+            if(mapMarque.contains(marqueObj) ){
+
                 System.out.println(ConsoleColors.BLUE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
             }else {
-                System.out.println(ConsoleColors.CYAN + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                mapMarque.add(produit.getMarque().getNom());
+                System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
+                mapMarque.add(marqueObj);
                 marqueDAO.save(produit.getMarque());
             }
 
             if(mapCategory.size() == 0 ){
 
-                mapCategory.contains(produit.getCategory().getNom());
+                mapCategory.contains(categoryObj);
             }
-            if(mapCategory.contains(produit.getCategory().getNom()) ){
+            if(mapCategory.contains(categoryObj) ){
                 System.out.println(ConsoleColors.GREEN_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
             }else {
                 System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                mapCategory.add(produit.getCategory().getNom());
+                mapCategory.add(categoryObj);
                 categoryDAO.save(produit.getCategory());
+                produitDAO.save(produit);
             }
 
 
 
 
-
-            for (Allergie al: produit.getAllergie()){
+            for (Allergie al: allergieList){
                 contAl ++;
 
                 if(mapAllergie.size() == 0 ){
 
-                    mapAllergie.contains(al.getNom());
+                    mapAllergie.add(al);
                 }
-                if(mapAllergie.contains(al.getNom()) ){
+                if(mapAllergie.contains(al) ){
                     System.out.println(ConsoleColors.PURPLE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
                 }else {
                     System.out.println(ConsoleColors.PURPLE_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                    mapAllergie.add(al.getNom());
+                    mapAllergie.add(al);
                     allergieDAO.save(al);
                 }
 
             }
 
-            for (Additif ad: produit.getAdditif()){
+            for (Additif ad: additifList){
                 contAd ++;
 
                 if(mapAdditif.size() == 0 ){
 
-                    mapAdditif.contains(ad.getNom());
+                    mapAdditif.add(ad);
                 }
-                if(mapAdditif.contains(ad.getNom()) ){
+                if(mapAdditif.contains(ad) ){
                     System.out.println(ConsoleColors.RED + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
                 }else {
                     System.out.println(ConsoleColors.RED_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                    mapAdditif.add(ad.getNom());
+                    mapAdditif.add(ad);
                     additifDAO.save(ad);
                 }
 
             }
-            for (Ingredient ing: produit.getIngredients()){
+
+
+            for (Ingredient ing: ingredientList){
                 contIng ++;
 
                 if(mapIngredient.size() == 0 ){
 
-                    mapIngredient.add(ing.getNom());
+                    mapIngredient.add(ing);
                 }
-                if(mapIngredient.contains(ing.getNom()) ){
+                if(mapIngredient.contains(ing) ){
                     System.out.println(ConsoleColors.YELLOW + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
 
                 }else {
                     System.out.println(ConsoleColors.YELLOW_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
-                    mapIngredient.add(ing.getNom());
+                    mapIngredient.add(ing);
                     ingredientDAO.save(ing);
                 }
 
             }
 
-
-
-            produitDAO.save(produit);
-
+            em.getTransaction().commit();
         }
-        em.getTransaction().commit();
         em.close();
+
+
 
         long b = System.currentTimeMillis();
         long r = (a - b ) /1000;

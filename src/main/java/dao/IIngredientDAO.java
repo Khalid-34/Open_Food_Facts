@@ -15,5 +15,5 @@ public interface IIngredientDAO extends IDao<Ingredient>{
     List<Ingredient> getAll() throws Exception;
 
     @Override
-    long save(Ingredient ingredient) throws Exception;
+    void save(Ingredient ingredient) throws Exception;
 }

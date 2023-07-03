@@ -15,5 +15,5 @@ public interface IAdditifDAO extends IDao<Additif> {
     List<Additif> getAll() throws Exception;
 
     @Override
-    long save(Additif additif) throws Exception;
+    void save(Additif additif) throws Exception;
 }

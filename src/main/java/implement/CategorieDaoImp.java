@@ -37,31 +37,9 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
      * @throws Exception
      */
     @Override
-    public long save(Category category) throws Exception {
+    public void save(Category category) throws Exception {
         em.persist(category);
 
-/*
-        Cache cache = emf.getCache();
-        if(cache.contains(Category.class,1L)){
-            System.out.println(ConsoleColors.GREEN_BOLD + "contain" + category.getNom());
-        }else {
-            em.persist(category);
-        }
-*/
-
-/*        Query query = em.createQuery("SELECT c FROM Category c WHERE c.nom = ?1");
-        query.setParameter(1, category.getNom());
-        query.setMaxResults(1);
-        List<Category> categorieDB = query.getResultList();
-        if (categorieDB == null || categorieDB.isEmpty()) {
-            em.persist(category);
-        } else {
-            category.setId(categorieDB.get(0).getId());
-        }*/
-
-        return 0;
     }
-
-
 
 }

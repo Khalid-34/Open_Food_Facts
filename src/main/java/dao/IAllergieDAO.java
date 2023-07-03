@@ -15,5 +15,5 @@ public interface IAllergieDAO extends IDao<Allergie>{
     List<Allergie> getAll() throws Exception;
 
     @Override
-    long save(Allergie allergie) throws Exception;
+    void save(Allergie allergie) throws Exception;
 }

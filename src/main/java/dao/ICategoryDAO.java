@@ -15,5 +15,5 @@ public interface ICategoryDAO extends IDao<Category>{
     List<Category> getAll() throws Exception;
 
     @Override
-    long save(Category category) throws Exception;
+    void save(Category category) throws Exception;
 }
