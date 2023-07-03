@@ -37,7 +37,6 @@ public class App {
         HashSet<Ingredient> mapIngredient = new HashSet<>();
         HashSet<Allergie> mapAllergie = new HashSet<>();
         HashSet<Additif> mapAdditif = new HashSet<>();
-        HashSet<Produit> mapProduit = new HashSet<>();
 
 
 
@@ -49,10 +48,9 @@ public class App {
         long a = System.currentTimeMillis();
 
 
-
         for( Produit produit: produits){
-            em.getTransaction().begin();
 
+            em.getTransaction().begin();
 
 
             Marque marqueObj = produit.getMarque();
@@ -62,14 +60,9 @@ public class App {
             Set<Ingredient> ingredientList = produit.getIngredients();
 
 
-
-
             i++;
 
-            if(mapMarque.size() == 0 ){
 
-                mapMarque.add(marqueObj);
-            }
             if(mapMarque.contains(marqueObj) ){
 
                 Iterator<Marque> marqueIterator = mapMarque.iterator();
@@ -87,17 +80,16 @@ public class App {
 
             }
 
-            if(mapCategory.size() == 0 ){
+            // Category
 
-                mapCategory.contains(categoryObj);
-            }
+
             if(mapCategory.contains(categoryObj) ){
 
                 Iterator<Category> categorieIterator = mapCategory.iterator();
                 while (categorieIterator.hasNext()){
                     Category categoryNext = categorieIterator.next();
-                    if(categoryNext.getId() == marqueObj.getId()){
-                        marqueObj.setId(categoryNext.getId());
+                    if(categoryNext.getId() == categoryObj.getId()){
+                        categoryObj.setId(categoryNext.getId());
                     }
                 }
 
@@ -107,25 +99,32 @@ public class App {
                 System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
                 mapCategory.add(categoryObj);
                 categoryDAO.save(produit.getCategory());
-                produitDAO.save(produit);
 
             }
 
+/*
+            produitDAO.save(produit);
+*/
 
 
+            // allergie
 
             for (Allergie al: allergieList){
                 contAl ++;
 
-                if(mapAllergie.size() == 0 ){
-
-                    mapAllergie.add(al);
-                }
                 if(mapAllergie.contains(al) ){
-                    System.out.println(ConsoleColors.PURPLE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+
+                    Iterator<Allergie> allergieIterator = mapAllergie.iterator();
+                    while (allergieIterator.hasNext()){
+                        Allergie allergieNext = allergieIterator.next();
+                        if(allergieNext.getId() == al.getId()){
+                            al.setId(allergieNext.getId());
+                        }
+                    }
+                    System.out.println(ConsoleColors.PURPLE + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                 }else {
-                    System.out.println(ConsoleColors.PURPLE_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+                    System.out.println(ConsoleColors.PURPLE_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     mapAllergie.add(al);
                     allergieDAO.save(al);
                 }
@@ -135,15 +134,20 @@ public class App {
             for (Additif ad: additifList){
                 contAd ++;
 
-                if(mapAdditif.size() == 0 ){
 
-                    mapAdditif.add(ad);
-                }
                 if(mapAdditif.contains(ad) ){
-                    System.out.println(ConsoleColors.RED + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+
+                    Iterator<Additif> additifIterator = mapAdditif.iterator();
+                    while (additifIterator.hasNext()){
+                        Additif adNext = additifIterator.next();
+                        if(adNext.getId() == ad.getId()){
+                            ad.setId(adNext.getId());
+                        }
+                    }
+                    System.out.println(ConsoleColors.RED + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
 
                 }else {
-                    System.out.println(ConsoleColors.RED_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+                    System.out.println(ConsoleColors.RED_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     mapAdditif.add(ad);
                     additifDAO.save(ad);
                 }
@@ -154,20 +158,45 @@ public class App {
             for (Ingredient ing: ingredientList){
                 contIng ++;
 
-                if(mapIngredient.size() == 0 ){
-
-                    mapIngredient.add(ing);
-                }
                 if(mapIngredient.contains(ing) ){
-                    System.out.println(ConsoleColors.YELLOW + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+                    Iterator<Ingredient> ingIterator = mapIngredient.iterator();
+                    while (ingIterator.hasNext()){
+                        Ingredient ingNext = ingIterator.next();
+                        if(ingNext.getId() == ing.getId()){
+                            ing.setId(ingNext.getId());
+                        }
+                    }
+
+                    System.out.println(ConsoleColors.YELLOW + "INGREDIENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                 }else {
-                    System.out.println(ConsoleColors.YELLOW_BOLD + "presnt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + i);
+                    System.out.println(ConsoleColors.YELLOW_BOLD + " INGREDIENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     mapIngredient.add(ing);
                     ingredientDAO.save(ing);
                 }
 
             }
+
+
+/*            if(mapProduit.size() == 0 ){
+
+                mapProduit.add(produit);
+            }
+            if(mapProduit.contains(produit) ){
+
+                Iterator<Produit> prodIterator = mapProduit.iterator();
+                while (prodIterator.hasNext()){
+                    Produit produitNext = prodIterator.next();
+                    if(produitNext.getId() == produit.getId()){
+                        produit.setId(produitNext.getId());
+                    }
+                }
+
+            }else {
+                System.out.println(ConsoleColors.CYAN + "insertion ***********************************************" + i);
+                mapProduit.add(produit);
+                produitDAO.save(produit);
+            }*/
             em.getTransaction().commit();
 
         }
