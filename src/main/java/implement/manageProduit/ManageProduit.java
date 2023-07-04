@@ -1,5 +1,6 @@
 package implement.manageProduit;
 
+import entities.Category;
 import entities.Produit;
 import implement.AbstractDAO;
 import jakarta.persistence.EntityManager;
@@ -28,10 +29,23 @@ public class ManageProduit extends AbstractDAO {
         return listP;
     }
 
-    //TODO Rechercher les N meilleurs produits pour une catégorie donnée
+    //TODO Rechercher les N meilleurs produits pour une catégorie donné
+    public List<Produit> searchBestCategory(String category, int n) {
+
+        String jpql = "SELECT p FROM Produit p JOIN p.category c WHERE c.nom = :category AND p.grade = 'a'";
+        TypedQuery<Produit> query = em.createQuery(jpql, Produit.class);
+        query.setParameter("category", category);
+        query.setMaxResults(n);
+        List<Produit> listC = query.getResultList();
+
+        return listC;
+    }
+
 
 
     //TODO Rechercher les N meilleurs produits par marque et catégorie
+
+
 
 
     //TODO  Afficher les N ingrédients les plus courants

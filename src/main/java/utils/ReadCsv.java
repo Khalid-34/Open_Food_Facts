@@ -27,7 +27,7 @@ public class ReadCsv {
         List<String> lines = null;
 
         try {
-            lines = FileUtils.readLines(new File("C:/Users/famille/Desktop/dossierTEST/Open_Food_Facts/src/assets/openfood.csv"),"UTF-8");
+            lines = FileUtils.readLines(new File("C:/Users/mess-/OneDrive/Bureau/Open_Food_Facts/src/assets/openfood.csv"),"UTF-8");
         } catch (IOException e) {
 
             System.out.println(e.getMessage());

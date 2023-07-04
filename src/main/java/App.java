@@ -1,3 +1,4 @@
+import entities.Category;
 import entities.Produit;
 import implement.AbstractDAO;
 import implement.manageProduit.ManageProduit;
@@ -36,6 +37,13 @@ public class App {
             System.out.println(ConsoleColors.YELLOW + produit.getNom());
         }
         scanner.nextLine();
+
+        List<Produit> produitsCategory = manageProduit.searchBestCategory("Aides culinaires" ,8);
+        for (int i =0; i < produitsCategory.size(); i++){
+
+            Produit produit = produitsCategory.get(i);
+            System.out.println(ConsoleColors.YELLOW + produit.getNom());
+        }
 
     }
 }
