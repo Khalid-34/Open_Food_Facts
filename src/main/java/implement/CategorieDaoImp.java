@@ -42,4 +42,9 @@ public class CategorieDaoImp extends AbstractDAO implements ICategoryDAO {
 
     }
 
+    @Override
+    public Category findByNom(Category category, String n) throws Exception {
+        return null;
+    }
+
 }

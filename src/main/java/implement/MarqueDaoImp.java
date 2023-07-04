@@ -48,7 +48,7 @@ public class MarqueDaoImp extends AbstractDAO implements IMarqueDAO {
 
     @Override
     public Marque findByNom(Marque marque, String nom) throws Exception {
-        TypedQuery<Marque> query = em.createQuery("FROM Produit WHERE nom=:nom AND marque=:marque", Marque.class);
+        TypedQuery<Marque> query = em.createQuery("FROM Produit WHERE nom=:nom AND marque=:marque ", Marque.class);
         query.setParameter("nom",nom);
         query.setParameter("marque",marque);
 

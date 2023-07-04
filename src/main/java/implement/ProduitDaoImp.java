@@ -36,4 +36,9 @@ public class ProduitDaoImp extends AbstractDAO implements IProduitDAO {
         em.persist(produit);
     }
 
+    @Override
+    public Produit findByNom(Produit produit, String n) throws Exception {
+        return null;
+    }
+
 }

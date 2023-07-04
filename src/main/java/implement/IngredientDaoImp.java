@@ -33,4 +33,9 @@ public class IngredientDaoImp extends AbstractDAO implements IIngredientDAO {
         em.persist(ingredient);
     }
 
+    @Override
+    public Ingredient findByNom(Ingredient ingredient, String n) throws Exception {
+        return null;
+    }
+
 }

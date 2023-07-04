@@ -14,8 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "produit")
 @Cacheable
-
-
 public class Produit {
     @Id
     @Column(name = "id")

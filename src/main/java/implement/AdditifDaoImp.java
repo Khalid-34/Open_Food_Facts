@@ -44,4 +44,9 @@ public class AdditifDaoImp extends AbstractDAO implements IAdditifDAO {
     em.persist(additif);
 
     }
+
+    @Override
+    public Additif findByNom(Additif additif, String n) throws Exception {
+        return null;
+    }
 }

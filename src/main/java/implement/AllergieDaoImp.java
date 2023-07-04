@@ -42,4 +42,9 @@ public class AllergieDaoImp extends AbstractDAO implements IAllergieDAO {
         em.persist(allergie);
     }
 
+    @Override
+    public Allergie findByNom(Allergie allergie, String n) throws Exception {
+        return null;
+    }
+
 }
