@@ -1,6 +1,7 @@
 package implement.manageProduit;
 
 import entities.Category;
+import entities.Ingredient;
 import entities.Produit;
 import implement.AbstractDAO;
 import jakarta.persistence.EntityManager;
@@ -10,7 +11,12 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Role :
@@ -60,26 +66,51 @@ public class ManageProduit extends AbstractDAO {
         return  produits ;
     }
 
+        //TODO  Afficher les noms  d' ingrédients  les plus courant
 
-    //TODO  Afficher les N ingrédients les plus courants
 
-    public <T,R> List<T> searchNCourant(Class<T> element, String elementNom){
 
-        CriteriaBuilder criteriaBuild = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuild.createQuery(element);
-        Root<T> root = criteriaQuery.from(element);
-        criteriaQuery.select(root).groupBy(root.get(elementNom)).orderBy(criteriaBuild.desc( criteriaBuild.count(root.get(elementNom))));
-        TypedQuery<T> query = em.createQuery(criteriaQuery);
 
-        return query.getResultList();
 
+/*    public List<Ingredient> getMostCommonAttributeValues() {
+        String jpql = "SELECT i FROM Ingredient i JOIN i.produits p GROUP BY i.id ORDER BY COUNT(p) DESC";
+        TypedQuery<Ingredient> query = em.createQuery(jpql, Ingredient.class);
+        List<Ingredient> ingredients = query.getResultList();
+        return ingredients;
+    }
+    */
+
+    public <T> List<T> getMostCommonAttributeValues(Class<T> entityClass) {
+        String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e JOIN e.produits a GROUP BY e.id ORDER BY COUNT(a) DESC";
+        TypedQuery<T> query = em.createQuery(jpql, entityClass);
+        List<T> results = query.getResultList();
+        return results;
     }
 
+    /**
+     * Utilisation de la reflexion pour obtenir le getter
+     * @param entityClass
+     * @param n
+     * @param <T>
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public <T> void getStringMost(Class<T> entityClass, int n) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        List<T> produitList = getMostCommonAttributeValues(entityClass);
 
+        List<String> listNom = new ArrayList<>();
+        for (T element: produitList) {
 
+            Method getNom = entityClass.getMethod("getNom");
+            String produit = (String) getNom.invoke(element);
+            listNom.add(produit);
+        }
+        List<String> nomsIngredientsDistincts = listNom.stream()
+                .distinct()
+                .limit(10)
+                .collect(Collectors.toList());
+        for (String str: nomsIngredientsDistincts) System.out.println(str);
+    }
 
-    //TODO Afficher les N allergènes les plus courants
-
-
-    //TODO Afficher les N additifs les plus courants
 }
