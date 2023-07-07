@@ -108,7 +108,7 @@ public class ManageProduit extends AbstractDAO {
         }
         List<String> nomsIngredientsDistincts = listNom.stream()
                 .distinct()
-                .limit(10)
+                .limit(n)
                 .collect(Collectors.toList());
         for (String str: nomsIngredientsDistincts) System.out.println(str);
     }
