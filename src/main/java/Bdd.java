@@ -10,6 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Utiliser pour
+ * creer les hasmap et envois des data a la bdd
+ *
+ *
+ */
 public class Bdd {
 
     public static void run() throws Exception {
@@ -26,7 +32,10 @@ public class Bdd {
         IMarqueDAO marqueDAO = new MarqueDaoImp(em);
         IAdditifDAO additifDAO = new AdditifDaoImp(em);
 
-
+        /**
+         * Creation des Hasmap pour le stockage des données
+         * Cle String et valeur Entité
+         */
         HashMap<String, Marque> mapMarque = new HashMap<>();
         HashMap<String, Category> mapCategory = new HashMap<>();
         HashMap<String, Ingredient> mapIngredient = new HashMap<>();
@@ -37,7 +46,6 @@ public class Bdd {
         long debut = System.currentTimeMillis();
         em.getTransaction().begin();
         for (Produit produit : produits) {
-
 
             Marque marqueObj = produit.getMarque();
             Category categoryObj = produit.getCategory();
@@ -150,6 +158,14 @@ public class Bdd {
         em.getTransaction().commit();
 
         em.close();
+        // vider les caches
+        mapCategory.clear();
+        mapMarque.clear();
+        mapAllergie.clear();
+        mapProduit.clear();
+        mapIngredient.clear();
+        mapAdditif.clear();
+
 
 
         long fin = System.currentTimeMillis();

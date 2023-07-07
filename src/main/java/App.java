@@ -22,15 +22,18 @@ public class App {
         if(nbResponse == 1 ){
             Bdd.run();
         }
-        scanner.nextLine(); // vider
+        ManageProduit manageProduit = new ManageProduit(em);
+        scanner.nextLine();
 
+        System.out.println(ConsoleColors.BLUE + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(ConsoleColors.YELLOW + "<<<<<<<<<< Rechercher les N meilleurs produits pour une marque donnée >>>>>>>");
         System.out.print(ConsoleColors.BLUE + "_____ Entrez le nom de la marque ____\n");
         String marque = scanner.nextLine();
         System.out.print(ConsoleColors.BLUE + "_____ Entrez le nombre  ____\n");
         int nb = Integer.parseInt(scanner.nextLine());
 
-        ManageProduit manageProduit = new ManageProduit(em);
+
+        // a changer
         List<Produit> produitList = manageProduit.searchBestProduct(marque,nb);
         for (int i = 0; i < produitList.size(); i++) {
             Produit produit = produitList.get(i);
@@ -38,12 +41,42 @@ public class App {
         }
         scanner.nextLine();
 
-        List<Produit> produitsCategory = manageProduit.searchBestCategory("Aides culinaires" ,8);
+        System.out.println(ConsoleColors.BLUE + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(ConsoleColors.YELLOW + "<<<<<<<<<< Rechercher les N meilleurs produits pour une marque donnée >>>>>>>");
+        System.out.print(ConsoleColors.BLUE + "_____ Entrez le nom de la categorie ____\n");
+        String categorie = scanner.nextLine();
+        System.out.print(ConsoleColors.BLUE + "_____ Entrez le nombre  ____\n");
+        int nb1 = Integer.parseInt(scanner.nextLine());
+
+        List<Produit> produitsCategory = manageProduit.searchBestCategory(categorie,nb1);
         for (int i =0; i < produitsCategory.size(); i++){
 
             Produit produit = produitsCategory.get(i);
             System.out.println(ConsoleColors.YELLOW + produit.getNom());
         }
+
+
+
+        System.out.println(ConsoleColors.BLUE + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(ConsoleColors.YELLOW + "<<<<<<<<<<  Rechercher les N meilleurs produits par marque et catégorie >>>>>>>");
+        System.out.print(ConsoleColors.BLUE + "_____ Entrez le nom de la marque ____\n");
+        String marque1 = scanner.nextLine();
+        System.out.print(ConsoleColors.BLUE + "_____ Entrez le nom de la categorie ____\n");
+        String category = scanner.nextLine();
+        System.out.print(ConsoleColors.BLUE + "_____ Entrez le nombre  ____\n");
+        int nb2 = Integer.parseInt(scanner.nextLine());
+
+         List<Produit>  produitList1 =  manageProduit.searchBestMarqueCat(category,marque1,nb2);
+        for (int i =0; i < produitList1.size(); i++){
+
+            Produit produit = produitList1.get(i);
+            System.out.println(ConsoleColors.YELLOW + produit.getNom());
+        }
+
+
+
+
+
 
     }
 }
